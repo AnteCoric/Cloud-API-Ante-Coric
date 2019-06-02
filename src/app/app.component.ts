@@ -19,7 +19,7 @@ export class AppComponent {
       this.champions.sort()
     });
   }
-
+  CurrentTab: string = "Abilities";
   ready: boolean = false;
   champions: Champion[] = [];
   isInfoShown: boolean = false;
@@ -27,6 +27,11 @@ export class AppComponent {
   SelectedChampionInfo: FullChampion;
   SelectedChampionSplash: string = "url('../assets/background.jpg')";
   SelectedChampionLoading: string;
+  Level: number = 1;
+  LoreShown: boolean;
+  StatNames: string[] =["Hp","Mp","Armor","Spellblock","HpRegen","MpRegen","AtkDamage","AtkSpeed"];
+  Stats: number[];
+  Skins: string[];
   InfoIsReady(){
     console.log(this.SelectedChampionInfo);
     if(this.SelectedChampionInfo == undefined){
@@ -46,13 +51,11 @@ export class AppComponent {
   getPortraitImage(champion):string{
     return "http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/" + champion;
   }
-
-  getSplashImage(){
-    this.SelectedChampionSplash = "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + this.SelectedChampionInfo.id + "_0.jpg";
+  getSplashImage(index = 0){
+    return "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + this.SelectedChampionInfo.id + "_" + index  +".jpg";
   }
-
-  getLoadingImage(){
-    this.SelectedChampionLoading = "http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + this.SelectedChampionInfo.id + "_0.jpg";
+  getLoadingImage(index = 0){
+    return "http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + this.SelectedChampionInfo.id + "_" + index  +".jpg";
   }
   getPassiveImage():string{
     return "http://ddragon.leagueoflegends.com/cdn/6.24.1/img/passive/" + this.SelectedChampionInfo.passive.image.full;
@@ -60,8 +63,20 @@ export class AppComponent {
   getSpellImage(spell):string{
     return "http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/" + spell;
   }
-
+  setLoadingImage(index = 0){
+    this.SelectedChampionLoading = this.getLoadingImage(index);
+  }
+  setSplashImage(index = 0){
+    this.SelectedChampionSplash = this.getSplashImage(index);
+  }
+  setSkin(index = 0){
+    this.setSplashImage(index);
+    this.setLoadingImage(index);
+  }
   async ChampionSelected(event){
+    this.Level = 1;
+    this.CurrentTab = "Abilities";
+    this.LoreShown = false;
     this.SelectedChampion = event.target.title;
     if (this.isInfoShown){
       this.isInfoShown = false;
@@ -72,11 +87,21 @@ export class AppComponent {
     }
     console.log(this.SelectedChampionInfo)
     })
-    await this.getSplashImage();
-    await this.getLoadingImage();
+    this.SetStats();
+    await this.setSplashImage();
+    await this.setLoadingImage();
     if (!this.isInfoShown){
     this.isInfoShown = true;
     }
+  }
+  SetStats(){
+    this.Stats = Object.values(this.SelectedChampionInfo.stats);
+    this.Stats.splice(4,1);
+    this.Stats.splice(8,1);
+    this.Stats.splice(12,2);
+  }
+  async ChangeTab(event){
+    this.CurrentTab = event.target.innerHTML;
   }
 
 

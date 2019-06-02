@@ -1,18 +1,15 @@
-.card{
-    width: 10%;
-}
-
 .card-holder{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-content: flex-start;
-    overflow: auto;
-    height: 1000px;
+    overflow: scroll;
+    height: 100vh;
+    flex: 6;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
-
 .background{
     position: absolute;
+    z-index: -1;
     left: 0px;
     right: 0px;
     top: 0px;
@@ -24,24 +21,76 @@
     background-image: url('../assets/background.jpg');
 
 }
+
 .infobackground{
     background-repeat:no-repeat;
     width:300px;
     height: 100%;
+    margin-right: 0px;
     opacity: 0.4;
     position: relative;
     z-index: 1;
 }
+
 .spells{
     display: flex;
     margin-top: 10px;
 }
+
 .infocontent p{
     color:white;
 }
+
+.infocontent label{
+    color: white;
+}
+
+.infocontent ul{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    list-style: none;
+    padding: 0px;
+    margin-left: 10px;
+    color:white;
+}
+
+.infocontent li{
+    width: 130px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
 .infocontent{
     position: absolute;
     top: 0;
     left: 0;
     z-index: 2;
 }
+
+div.mat-expansion-panel-body {
+    padding-right: 12px;
+    padding-left: 12px;
+}
+
+.stats{
+    width: 290px;
+    height: 200px;
+}
+
+mat-slider {
+    width: 235px;
+}
+::ng-deep .mat-accent .mat-slider-thumb {
+    background-color: gold;
+} 
+::ng-deep .mat-accent .mat-slider-thumb-label {
+    background-color: gold;
+}
+::ng-deep .mat-accent .mat-slider-track-fill {
+    background-color: gold;
+}
+::ng-deep .mat-accent .mat-slider-track-background {
+    background-color: white;
+}
+  
